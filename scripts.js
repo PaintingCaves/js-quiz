@@ -76,10 +76,12 @@ $("#submitter").click(function() {
 });
 
 function resultsDisplay() {
-  alert(`You got ${score} out of ${questions.length}`);
+  $("#top").append(`<p> You got ${score} out of ${questions.length}</p>`)
+  // alert(`You got ${score} out of ${questions.length}`);
 }
 
 $("#top").on('click',"#viewer",function() {
+  $("#formBody").hide();
   marker();
   resultsDisplay();
 });
