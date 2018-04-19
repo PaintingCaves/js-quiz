@@ -38,7 +38,7 @@ function buttonMaker() {
   $("#formBody").after(`<button type="button" id="submitter">Submit your answers</button>`);
 }
 let rawResults = [];
-
+let memo = [];
 function resultsTaker() {
   for (i = 1; i < 3; i++) {
     let singleResult = $('input[name=test' + i + ']:checked', '#formBody').val();
@@ -50,6 +50,15 @@ formCreator();
 formFiller();
 buttonMaker();
 
+function memoCreator(){
+  for (question of questions){
+    let singleMemo = (question.correctAnswer);
+    memo.push(singleMemo);
+  }
+}
+
 $("#submitter").click(function() {
   resultsTaker();
+  memoCreator();
+
 });
