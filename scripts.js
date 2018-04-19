@@ -34,13 +34,15 @@ function formFiller() {
   }
 }
 
-function buttonMaker() {
-  $("#formBody").after(`<button type="button" id="submitter">Submit your answers</button>`);
+function buttonMaker(position,id,content) {
+  $(position).after(`<button type="button" id="${id}">${content}</button>`);
 }
 let rawResults = [];
 let memo = [];
+let score = 0;
+
 function resultsTaker() {
-  for (i = 1; i < 3; i++) {
+  for (i = 1; i < questions.length + 1; i++) {
     let singleResult = $('input[name=test' + i + ']:checked', '#formBody').val();
     rawResults.push(singleResult);
   }
@@ -48,17 +50,35 @@ function resultsTaker() {
 }
 formCreator();
 formFiller();
-buttonMaker();
+buttonMaker("#formBody","submitter","Submit your answers");
 
-function memoCreator(){
-  for (question of questions){
+function memoCreator() {
+  for (question of questions) {
     let singleMemo = (question.correctAnswer);
     memo.push(singleMemo);
   }
+  console.log(memo);
+}
+
+function marker() {
+  for (i = 0; i < questions.length; i++) {
+    if (rawResults[i] == memo[i]) {
+      score++;
+    }
+  }
+  console.log(score);
 }
 
 $("#submitter").click(function() {
   resultsTaker();
   memoCreator();
+  buttonMaker("#submitter","viewer","see your results");
+});
 
+function resultsDisplay() {
+  alert(`You got ${score} out of ${questions.length}`);
+}
+
+$("#viewer").click(function() {
+  resultsDisplay();
 });
