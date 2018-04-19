@@ -79,6 +79,7 @@ function resultsDisplay() {
   alert(`You got ${score} out of ${questions.length}`);
 }
 
-$("#viewer").click(function() {
+$("#top").on('click',"#viewer",function() {
+  marker();
   resultsDisplay();
 });
