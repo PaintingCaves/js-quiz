@@ -142,6 +142,9 @@ let questions = [{
 ]
 let messages = [
   "How!?",
-  "Nearly there",
-  "Nice!"
+  "Are you Stalin'?",
+  "Better than random chance!",
+  "More right than wrong!",
+  "Almost there!",
+  "Well done, you're a true hero of the Soviet Union!"
 ]

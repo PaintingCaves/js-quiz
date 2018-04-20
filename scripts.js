@@ -28,10 +28,10 @@ function formFiller() {
   for (question of questions) {
     $("#formBody").append(`<p>${question.questionNumber}) ${question.questionBody}</p>`);
     $("#formBody").append(`<fieldset id="${question.questionNumber}">
-      <input type="radio" name="${question.title}" value="${question.answers[0]}"> ${question.answers[0]}<br>
-    <input type="radio" name="${question.title}" value="${question.answers[1]}"> ${question.answers[1]}<br>
-    <input type="radio" name="${question.title}" value="${question.answers[2]}"> ${question.answers[2]}<br>
-    <input type="radio" name="${question.title}" value="${question.answers[3]}"> ${question.answers[3]}<br>
+      <input type="radio"  name="${question.title}" value="${question.answers[0]}"> ${question.answers[0]}<br>
+    <input type="radio"  name="${question.title}" value="${question.answers[1]}"> ${question.answers[1]}<br>
+    <input type="radio"  name="${question.title}" value="${question.answers[2]}"> ${question.answers[2]}<br>
+    <input type="radio"  name="${question.title}" value="${question.answers[3]}"> ${question.answers[3]}<br>
     </fieldset>`);
   }
 }
@@ -79,10 +79,32 @@ $("#submitter").click(function() {
 
 function resultsDisplay() {
   $("#top").append(`<p> You got ${score} out of ${questions.length}</p>`);
-  $("#top").append(`<p>${messages[score]}</p>`);
+  if (score<0){
+    $("#top").append(`<p>${messages[0]}</p>`);
+  }
+  else if (score>-1 && score<5) {
+    $("#top").append(`<p>${messages[1]}</p>`);
+  }
+  else if (score>5 && score<11) {
+    $("#top").append(`<p>${messages[2]}</p>`);
+  }
+  else if (score>11 && score<16) {
+    $("#top").append(`<p>${messages[3]}</p>`);
+  }
+  else if (score>16 && score<20) {
+    $("#top").append(`<p>${messages[4]}</p>`);
+  }
+  else if (score==20) {
+    $("#top").append(`<p>${messages[5]}</p>`);
+    sovietIntensifies();
+  }
 }
 
-
+function sovietIntensifies(){
+  $("#top").append(`<iframe width="420" height="315"
+  src="https://www.youtube.com/embed/U06jlgpMtQs?rel=0&autoplay=1">
+  </iframe>`);
+}
 
 $("#top").on('click', "#viewer", function() {
   $("#formBody").hide();
