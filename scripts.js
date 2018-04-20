@@ -1,21 +1,23 @@
-let questions = [{
-    title: 'test1',
-    questionNumber: 1,
-    questionBody: 'this is a question',
-    answers: ['apple', 'orange', 'pear', 'plum'],
-    correctAnswer: 'apple'
-  },
-  {
-    title: 'test2',
-    questionNumber: 2,
-    questionBody: 'this is a question',
-    answers: ['car', 'truck', 'bike', 'boat'],
-    correctAnswer: 'boat'
-  }
-]
-
-
-
+// let questions = [{
+//     title: 'test1',
+//     questionNumber: 1,
+//     questionBody: 'this is a question',
+//     answers: ['apple', 'orange', 'pear', 'plum'],
+//     correctAnswer: 'apple'
+//   },
+//   {
+//     title: 'test2',
+//     questionNumber: 2,
+//     questionBody: 'this is a question',
+//     answers: ['car', 'truck', 'bike', 'boat'],
+//     correctAnswer: 'boat'
+//   }
+// ]
+// let messages = [
+//   "How!?",
+//   "Nearly there",
+//   "Nice!"
+// ]
 
 
 function formCreator() {
@@ -34,7 +36,7 @@ function formFiller() {
   }
 }
 
-function buttonMaker(position,id,content) {
+function buttonMaker(position, id, content) {
   $(position).after(`<button type="button" id="${id}">${content}</button>`);
 }
 let rawResults = [];
@@ -43,14 +45,14 @@ let score = 0;
 
 function resultsTaker() {
   for (i = 1; i < questions.length + 1; i++) {
-    let singleResult = $('input[name=test' + i + ']:checked', '#formBody').val();
+    let singleResult = $('input[name=part' + i + ']:checked', '#formBody').val();
     rawResults.push(singleResult);
   }
   console.log(rawResults);
 }
 formCreator();
 formFiller();
-buttonMaker("#formBody","submitter","Submit your answers");
+buttonMaker("#formBody", "submitter", "Submit your answers");
 
 function memoCreator() {
   for (question of questions) {
@@ -72,16 +74,19 @@ function marker() {
 $("#submitter").click(function() {
   resultsTaker();
   memoCreator();
-  buttonMaker("#submitter","viewer","see your results");
+  buttonMaker("#submitter", "viewer", "see your results");
 });
 
 function resultsDisplay() {
-  $("#top").append(`<p> You got ${score} out of ${questions.length}</p>`)
-  // alert(`You got ${score} out of ${questions.length}`);
+  $("#top").append(`<p> You got ${score} out of ${questions.length}</p>`);
+  $("#top").append(`<p>${messages[score]}</p>`);
 }
 
-$("#top").on('click',"#viewer",function() {
+
+
+$("#top").on('click', "#viewer", function() {
   $("#formBody").hide();
   marker();
   resultsDisplay();
+
 });
