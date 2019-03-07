@@ -20,39 +20,47 @@
 // ]
 
 
+
 function formCreator() {
-  $("#top").append("<form id=\"formBody\"></form>");
+  document.getElementById('top').appendChild(document.createElement('form')).id = 'formBody';
 }
+
+formCreator()
 
 function formFiller() {
   for (question of questions) {
-    $("#formBody").append(`<p>${question.questionNumber}) ${question.questionBody}</p>`);
-    $("#formBody").append(`<fieldset id="${question.questionNumber}">
-      <input type="radio"  name="${question.title}" value="${question.answers[0]}"> ${question.answers[0]}<br>
-    <input type="radio"  name="${question.title}" value="${question.answers[1]}"> ${question.answers[1]}<br>
-    <input type="radio"  name="${question.title}" value="${question.answers[2]}"> ${question.answers[2]}<br>
-    <input type="radio"  name="${question.title}" value="${question.answers[3]}"> ${question.answers[3]}<br>
-    </fieldset>`);
+
+    document.getElementById('formBody').appendChild(document.createElement('fieldset')).id = question.questionNumber;
+    document.getElementById(question.questionNumber).innerHTML =
+      `<p>${question.questionNumber}) ${question.questionBody}</p>
+      <label><input type="radio"  name="${question.title}" value="${question.answers[0]}"> ${question.answers[0]}</label><br>
+    <label><input type="radio"  name="${question.title}" value="${question.answers[1]}"> ${question.answers[1]}</label><br>
+    <label><input type="radio"  name="${question.title}" value="${question.answers[2]}"> ${question.answers[2]}</label><br>
+    <label><input type="radio"  name="${question.title}" value="${question.answers[3]}"> ${question.answers[3]}</label><br>
+    `;
   }
 }
 
+formFiller()
+
 function buttonMaker(position, id, content) {
-  $(position).after(`<button type="button" id="${id}">${content}</button>`);
+  document.getElementById(position).appendChild(document.createElement('div')).innerHTML = `<button type="button" id="${id}">${content}</button>`;
 }
+
+buttonMaker("formBody", "submitter", "Submit your answers");
+
 let rawResults = [];
 let memo = [];
 let score = 0;
 
 function resultsTaker() {
   for (i = 1; i < questions.length + 1; i++) {
-    let singleResult = $('input[name=part' + i + ']:checked', '#formBody').val();
+    let singleResult = document.querySelector('input[name=part' + i + ']:checked').value;
     rawResults.push(singleResult);
   }
   console.log(rawResults);
 }
-formCreator();
-formFiller();
-buttonMaker("#formBody", "submitter", "Submit your answers");
+
 
 function memoCreator() {
   for (question of questions) {
@@ -71,44 +79,43 @@ function marker() {
   console.log(score);
 }
 
-$("#submitter").click(function() {
-  resultsTaker();
-  memoCreator();
-  buttonMaker("#submitter", "viewer", "see your results");
+document.getElementById("submitter").addEventListener('click', function () {
+  try {
+    resultsTaker()
+    memoCreator();
+    document.getElementById("formBody").style.display = "none";
+    marker();
+    resultsDisplay();
+  } catch (err) {
+    alert('Fill in every question please!')
+    rawResults = []
+
+  };
+
+
 });
 
 function resultsDisplay() {
-  $("#top").append(`<p> You got ${score} out of ${questions.length}</p>`);
-  if (score<0){
-    $("#top").append(`<p>${messages[0]}</p>`);
-  }
-  else if (score>-1 && score<5) {
-    $("#top").append(`<p>${messages[1]}</p>`);
-  }
-  else if (score>5 && score<11) {
-    $("#top").append(`<p>${messages[2]}</p>`);
-  }
-  else if (score>11 && score<16) {
-    $("#top").append(`<p>${messages[3]}</p>`);
-  }
-  else if (score>16 && score<20) {
-    $("#top").append(`<p>${messages[4]}</p>`);
-  }
-  else if (score==20) {
-    $("#top").append(`<p>${messages[5]}</p>`);
+  document.getElementById('top').appendChild(document.createElement('p')).innerHTML = `<p> You got ${score} out of ${questions.length}</p>`;
+  if (score < 0) {
+    document.getElementById('top').appendChild(document.createElement('p')).innerHTML = `<p>${messages[0]}</p>`;
+  } else if (score > -1 && score < 5) {
+    document.getElementById('top').appendChild(document.createElement('p')).innerHTML = `<p>${messages[1]}</p>`;
+  } else if (score > 5 && score < 11) {
+    document.getElementById('top').appendChild(document.createElement('p')).innerHTML = `<p>${messages[2]}</p>`;
+  } else if (score > 11 && score < 16) {
+    document.getElementById('top').appendChild(document.createElement('p')).innerHTML = `<p>${messages[3]}</p>`;
+  } else if (score > 16 && score < 20) {
+    document.getElementById('top').appendChild(document.createElement('p')).innerHTML = `<p>${messages[4]}</p>`;
+  } else if (score == 20) {
+    document.getElementById('top').appendChild(document.createElement('p')).innerHTML = `<p>${messages[5]}</p>`;
     sovietIntensifies();
   }
 }
 
-function sovietIntensifies(){
-  $("#top").append(`<iframe width="420" height="315"
-  src="https://www.youtube.com/embed/U06jlgpMtQs?rel=0&autoplay=1">
-  </iframe>`);
+function sovietIntensifies() {
+  document.getElementById('top').appendChild(document.createElement('div')).innerHTML = `<iframe width="420" height="315"
+  src = "https://www.youtube.com/embed/U06jlgpMtQs?rel=0&autoplay=1"
+  allow = 'autoplay' >
+  </iframe>`;
 }
-
-$("#top").on('click', "#viewer", function() {
-  $("#formBody").hide();
-  marker();
-  resultsDisplay();
-
-});
